@@ -1,0 +1,133 @@
+About blubber-server
+=================
+This is the server component of the blubber game. The client source code
+is available at: <https://github.com/plaimi/blubber-client>.
+
+blubber is a simple arcade game in which you control a blub, that needs
+to blubber all the smaller blubs, in other to grow big enough to blubber
+the rest of the blubs.
+
+The server is a dedicated server. It sets up a game at a specified port,
+along with a Web server that serves an info page, and the source code of
+the server. Edit 'web/index.markdown' to customise the info page.
+
+The server is designed to be modular, so that non-standard clients may
+connect to and talk to your server -- or, so that you may serve a
+non-standard blubber server e.g. with its own rules. Your info site
+should document what your server does differently.
+
+When building the server, the source code is set up and served. If you
+add or remove files from the source code, you need to edit 'Setup.hs'
+accordingly.
+
+
+Dependencies
+============
+base               >=4.7   && <4.8
+Cabal              >=1.18  && <1.23
+cereal             >=0.4   && <0.5
+containers         >=0.5   && <0.6
+data-default-class >=0.0.1 && <0.1
+network            >=2.6   && <2.7
+pandoc             >=1.14  && <1.15
+process            >=1.2   && <1.3
+random             >=1.1   && <1.2
+scotty             >=0.7   && <0.10
+text               >=1.2   && <1.3
+transformers       >=0.4   && <0.5
+unix               >=2.7   && <2.8
+
+
+The server is built using GHC.
+
+Cabal is optional, but it makes building and installing a lot easier.
+
+
+Installing/setting up
+=====================
+
+NOTE: This repository is for developers. If you are a regular user, you
+should refer to <https://secure.plaimi.net/games/blubber.html>.
+
+Users should look for the server in their system's package manager. The
+server may be installed with cabal though.
+
+$ cabal install blubber-server
+
+Build instructions for developers
+---------------------------------
+# Optionally set up a sandboxed environment (recommended):
+$ cabal sandbox init
+
+# Install the dependencies:
+$ cabal install --only-dependencies
+
+# Build the server (puts a binary in ./dist/build/blubber-server/):
+$ cabal build
+
+# Make the documentation (puts html in ./dist/doc/htm/):
+$ cabal haddock --executables --hyperlink-source
+
+# Run the server:
+$ cabal run
+
+To install the server (not necessary usually) use:
+$ cabal install
+
+This will add the binary "blubber-server" to your cabal binaries (or to
+the sandbox).
+
+
+Running
+=======
+To run the server, use the executable (assumed to be in $PATH).
+$ blubber-server [PORT1] [PORT2]
+
+Where PORT1 is the port you want the game to use, and PORT2 the port you
+want the Web server to use.
+
+
+Low hanging fruit
+=================
+
+List of easy-to-fix things (easiest/quickest first):
+  -Rearrange TLDs to make things more readable and nice.
+  -Improve TDL documentation.
+  -Remove unnecessary Show instances that were put in for debugging.
+  -Reduce code duplication due to Map/Set.
+  -Add a way to properly exit the server.
+  -Add a verbose build flag for logging things to STDOUT.
+  -Set up optparse-applicative, and do argument parsing properly.
+  -Set up one input IORef per client.
+  -Let the clients navigate the ViewPort when only spectating.
+  -Use some vector library instead of reinventing everything.
+  -Optimise the serialisation, in order to improve network performance.
+  -Optimise collision detection to not check entities that are obviously
+  no where near each other.
+
+
+Licensing and Legalese
+=======================
+blubber-server is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+blubber-server is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with blubber-server.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+Contributing To the Project
+===========================
+
+There is a mailing list: <https://secure.plaimi.net/mailing.php>. On
+there you can discuss the game, suggest features, report bugs, get help
+(both as a user and as a developer), and so on.
+
+If you want to contribute code, send a patch to the mailing list.
