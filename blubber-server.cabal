@@ -3,7 +3,7 @@ version:               0.0.1
 synopsis:              The blubber server, serves blubber clients.
 description:           The blubber server. blubber is an arcade game in
                        which the player tries to build the biggest blob
-                       by blubberping the other blobs before they
+                       by blubbering the other blobs before they
                        blubber the player's blob.
 homepage:              https://secure.plaimi.net/games/blubber.html
 license:               AGPL-3
