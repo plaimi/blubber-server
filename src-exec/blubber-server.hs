@@ -220,7 +220,7 @@ step wp wi wo is w cs = do
                    let w''' = if round (t / 5) /= round ((t - dt) / 5)
                                  then addNeutral w''
                                  else w''
-                   writeChan wo $ WorldUpdate (mkViewPorts cs w)
+                   writeChan wo $ WorldUpdate (mkViewPorts cs w''')
                    return (cs, w''')
                  ClientMessage c m ->
                    case m of
