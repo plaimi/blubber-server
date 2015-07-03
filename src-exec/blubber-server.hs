@@ -12,6 +12,7 @@ Maintainer  :  blubber@plaimi.net
 
 import Control.Arrow
   (
+  (>>>),
   second,
   )
 import Control.Concurrent
@@ -135,6 +136,8 @@ import Blubber.Server.World
   updateWorld,
   )
 
+import Plailude
+
 import Paths_blubber_server
 
 -- | An 'Event' can either be a message from the client, or a 'Tick' to
@@ -215,13 +218,13 @@ step wp wi wo is w cs = do
   (cs', w') <- case wj of
                  Tick dt t         -> do
                    js <- readIORef is
-                   let w'   = handleInput (toList js) cs w
-                   let w''  = updateWorld dt w'
-                   let w''' = if round (t / 5) /= round ((t - dt) / 5)
-                                 then addNeutral w''
-                                 else w''
-                   writeChan wo $ WorldUpdate (mkViewPorts cs w''')
-                   return (cs, w''')
+                   let w' = handleInput (toList js) cs
+                        >>> updateWorld dt
+                        >>> if' (round (t / 5) /= round ((t - dt) / 5))
+                                addNeutral id
+                          $ w
+                   writeChan wo $ WorldUpdate (mkViewPorts cs w')
+                   return (cs, w')
                  ClientMessage c m ->
                    case m of
                      Connect       -> do
